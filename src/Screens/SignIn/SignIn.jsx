@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainHeader from '../../Components/Header/Header';
 import { auth } from '../../Database/config';
-import { Checkbox } from "primereact/checkbox";
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -23,7 +22,7 @@ export default function Login() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigate('/home')
+        navigate('/');
       }
     })
 
