@@ -5,7 +5,6 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import Login from './Screens/SignIn/SignIn';
 import AddProduct from './Screens/AddProduct/AddProduct';
 
-
 function App() {
   return (
     <Router>
