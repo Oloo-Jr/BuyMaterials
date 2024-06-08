@@ -14,7 +14,7 @@ export default function Login() {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
-        const user = userCredentials.user;
+        // Get user data
       })
       .catch(error => alert(error.message))
   }
@@ -24,10 +24,9 @@ export default function Login() {
       if (user) {
         navigate('/');
       }
-    })
-
-    return unsubscribe
-  }, [])
+    });
+    return unsubscribe;
+  }, []);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

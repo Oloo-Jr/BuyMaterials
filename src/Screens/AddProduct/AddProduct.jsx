@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { db, storage, auth } from '../../Database/config';
 import firebase from 'firebase/app';
 import { useNavigate } from 'react-router-dom';
@@ -6,10 +6,12 @@ import MainHeader from '../../Components/Header/Header';
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from "primereact/button";
+import { Toast } from "primereact/toast";
 
 export default function AddProduct() {
 
   const navigate = useNavigate();
+  const toast = useRef(null);
 
   const [loading, setIsLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -28,6 +30,14 @@ export default function AddProduct() {
     return navigate('/');
   }
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        navigate("/login");
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   const handleImageChange = (e) => {
     e.preventDefault();
@@ -41,7 +51,7 @@ export default function AddProduct() {
   const handleUpload = (e) => {
     e.preventDefault();
 
-   
+
 
     if (!title) {
       return setNameError(true);
@@ -63,7 +73,7 @@ export default function AddProduct() {
       return setDescriptionError(true);
     }
 
-    
+
     if (!image || !title || !description) {
       alert("Please fill in all fields before uploading.");
       return;
@@ -71,6 +81,7 @@ export default function AddProduct() {
 
     const serialNumber = Math.floor(100000 + Math.random() * 9000).toString();
 
+    setIsLoading(true);
     const uploadTask = storage.ref("PostImage")
       .child(serialNumber)
       .put(image);
@@ -94,11 +105,19 @@ export default function AddProduct() {
                 description: description,
                 imageUrl: imageUrl,
                 userId: auth.currentUser.uid,
-                Instock: isChecked,
                 price: price,
                 quantity: quantity,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              })
+              }).catch(function (error) {
+                toast.current.show({
+                  severity: "error",
+                  summary: "Registration Failed",
+                  detail: error,
+                  life: 3000,
+                });
+
+                setIsLoading(false);
+              });
 
             setTitle("");
             setDescription("");
@@ -107,8 +126,17 @@ export default function AddProduct() {
             setPrice("");
             setQuantity("");
 
-            alert('Upload Successful');
-          })
+            toast.current.show({
+              severity: "success",
+              summary: "Product Saved",
+              detail: "Product created successfully",
+              life: 3000,
+            });
+            setIsLoading(false);
+            return setTimeout(() => {
+              navigate("/");
+            }, 1000);
+          });
 
       }
     )
@@ -118,12 +146,11 @@ export default function AddProduct() {
 
   return (
     <div className='flex flex-col'>
+      <Toast ref={toast} position="bottom-left"></Toast>
       <MainHeader />
-
       <div className="flex gap-2 w-full justify-center text-2xl capitalize font-bold py-6">
-        <span className="text-red-600"> Hardware</span> Add a Product
+        Add a Product
       </div>
-
       <div className="bg-gray-100 px-12 py-6 w-full">
         <div className="grid sm:grid-cols-4 grid-cols-1 gap-4">
           <div className="flex flex-col gap-1">
@@ -137,7 +164,6 @@ export default function AddProduct() {
               className="border border-gray-200 px-2 py-2 rounded capitalize"
               placeholder="Name of the product"
               autoFocus
-              keyfilter="alpha"
               required
             />
             {nameError && (
