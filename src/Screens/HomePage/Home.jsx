@@ -89,7 +89,7 @@ const Home = () => {
             <div className="flex items-center sm:px-20 px-6 py-4 justify-between">
                 <h1 className="font-bold uppercase flex flex-col">
                     <div className='text-gray-900 text-2xl'>{business && business.businessname} </div>
-                    <div className='text-xs text-gray-500'>{business && business.businessType}</div>
+                    <div className='text-xs text-gray-500 font-semibold'>Jua Kali Category: {business && business.businessType}</div>
                 </h1>
                 <div className='bg-black text-white sm:text-sm text-[12px] rounded px-4 py-2 cursor-pointer font-medium flex gap-2 items-center' onClick={toAddProductPage}>
                     <PlusCircleIcon className='w-6 h-6' />
@@ -129,7 +129,7 @@ const Home = () => {
                         body={(rowData) => `${rowData.quantity}`}
                     ></Column>
                     <Column
-                        className="border"
+                        className="border w-1/2"
                         header="Description"
                         body={(rowData) => `${rowData.description}`}
                     ></Column>
