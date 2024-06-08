@@ -176,7 +176,10 @@ export default function AddProduct() {
             <label className="text-sm">Price (KSH)</label>
             <InputText
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={function (e) {
+                setPriceError(false);
+                setPrice(e.target.value);
+              }}
               className="border border-gray-200 px-2 py-2 rounded capitalize"
               placeholder="Price"
               keyfilter="money"
@@ -192,7 +195,10 @@ export default function AddProduct() {
             <label className="text-sm">Quantity</label>
             <InputText
               value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
+              onChange={function (e) {
+                setQuantityError(false);
+                setQuantity(e.target.value);
+              }}
               className="border border-gray-200 px-2 py-2 rounded capitalize"
               placeholder="Product Quantity"
               keyfilter="alphanum"
@@ -220,14 +226,19 @@ export default function AddProduct() {
               </div>
             )}
           </div>
-          <div className="flex flex-col gap-1">
+        </div>
+
+        <div className='flex w-full my-5'>
+          <div className="flex flex-col gap-1 w-full">
             <label className="text-sm">Description</label>
             <InputTextarea
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={function (e) {
+                setDescriptionError(false);
+                setDescription(e.target.value);
+              }}
               className="border border-gray-200 px-2 py-2 rounded capitalize"
               placeholder="Description"
-              keyfilter="alphanum"
               required
               rows={5}
               cols={30}
