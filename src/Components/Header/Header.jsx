@@ -23,7 +23,7 @@ export default function MainHeader() {
     auth
       .signOut()
       .then(() => {
-        window.location.href = '/login';
+        navigate('/login');
       })
       .catch(error => alert(error.message))
   }
