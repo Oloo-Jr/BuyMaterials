@@ -16,6 +16,7 @@ const Home = () => {
 
     const [business, setBusiness] = useState(null);
     const [products, setProducts] = useState([]);
+    const [loading, setIsLoading] = useState(true);
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
@@ -34,11 +35,14 @@ const Home = () => {
             if (docSnapshot.exists) {
                 setBusiness(docSnapshot.data());
                 getProductsForBusiness(docRef);
+                setIsLoading(false);
             } else {
                 console.log("Business details not found for the user.");
+                setIsLoading(false);
             }
         } catch (error) {
             console.error("Error fetching business details:", error);
+            setIsLoading(false);
         }
     };
 
@@ -56,6 +60,25 @@ const Home = () => {
         }
     };
 
+    const showButtons = (rowData) => {
+        return (
+          <div className="flex flex-row gap-2 items-center justify-between">
+            <EyeIcon
+            //   onClick={() => redirectToView(rowData.id)}
+              className="w-5 h-5 text-gray-500 cursor-pointer"
+            />
+            <PencilIcon
+            //   onClick={() => redirectToUpdate(rowData.id)}
+              className="w-5 h-5 text-green-500 cursor-pointer"
+            />
+            <TrashIcon
+            //   onClick={() => confirm(rowData.id)}
+              className="w-5 h-5 text-red-500 cursor-pointer"
+            />
+          </div>
+        );
+      };
+
     const toAddProductPage = () => {
         return navigate('/add-product');
     }
@@ -72,6 +95,50 @@ const Home = () => {
                     <PlusCircleIcon className='w-6 h-6' />
                     <div onClick={toAddProductPage}>Add a Product</div>
                 </div>
+            </div>
+            <div className='flex flex-col gap-4 sm:p-12 p-2'>
+                <DataTable
+                    className='text-sm'
+                    value={products}
+                    stripedRows
+                    paginator
+                    rows={10}
+                    emptyMessage="No products added"
+                    loading={loading}
+                    rowsPerPageOptions={[10, 25, 50]}
+                    tableStyle={{ minWidth: "50rem" }}
+                >
+                    <Column
+                        className="border"
+                        header="#"
+                        body={(e, i) => i.rowIndex + 1}
+                    ></Column>
+                    <Column
+                        className="border"
+                        header="Name"
+                        body={(rowData) => `${rowData.title}`}
+                    ></Column>
+                    <Column
+                        className="border"
+                        header="Price"
+                        body={(rowData) => `Ksh. ${rowData.price}`}
+                    ></Column>
+                    <Column
+                        className="border"
+                        header="Quantity"
+                        body={(rowData) => `${rowData.quantity}`}
+                    ></Column>
+                    <Column
+                        className="border"
+                        header="Description"
+                        body={(rowData) => `${rowData.description}`}
+                    ></Column>
+                    <Column
+                        className="border"
+                        header="Actions"
+                        body={showButtons}
+                    ></Column>
+                </DataTable>
             </div>
         </div>
     );
