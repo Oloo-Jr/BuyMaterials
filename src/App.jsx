@@ -7,6 +7,7 @@ import AddProduct from './Screens/AddProduct/AddProduct';
 import Home from './Screens/HomePage/Home';
 import ViewProduct from './Screens/ViewProduct/ViewProduct';
 import EditProduct from './Screens/AddProduct/EditProduct';
+import Error404 from './Screens/Error404/Error404';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/view-product/:id" element={<ViewProduct />} />
         <Route path="/edit-product/:id" element={<EditProduct />} />
+        <Route path="*" element={< Error404 />} />
       </Routes>
     </Router>
   );
