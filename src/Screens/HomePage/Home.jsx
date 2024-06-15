@@ -52,7 +52,7 @@ const Home = () => {
             const querySnapshot = await productsRef.get();
             const productsData = [];
             querySnapshot.forEach((doc) => {
-                productsData.push(doc.data());
+                productsData.push({ id: doc.id, ...doc.data() });
             });
             setProducts(productsData);
         } catch (error) {
@@ -60,11 +60,15 @@ const Home = () => {
         }
     };
 
+    const redirectToView = (id) => {
+        navigate(`/products/${id}`);
+    } 
+
     const showButtons = (rowData) => {
         return (
           <div className="flex flex-row gap-2 items-center justify-between">
             <EyeIcon
-            //   onClick={() => redirectToView(rowData.id)}
+              onClick={() => redirectToView(rowData.id)}
               className="w-5 h-5 text-gray-500 cursor-pointer"
             />
             <PencilIcon

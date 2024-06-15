@@ -5,6 +5,7 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import Login from './Screens/SignIn/SignIn';
 import AddProduct from './Screens/AddProduct/AddProduct';
 import Home from './Screens/HomePage/Home';
+import ViewProduct from './Screens/ViewProduct/ViewProduct';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/products/:id" element={<ViewProduct />} />
       </Routes>
     </Router>
   );
