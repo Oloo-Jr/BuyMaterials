@@ -61,7 +61,11 @@ const Home = () => {
     };
 
     const redirectToView = (id) => {
-        navigate(`/products/${id}`);
+        navigate(`/view-product/${id}`);
+    } 
+
+    const redirectToUpdate = (id) => {
+        navigate(`/edit-product/${id}`);
     } 
 
     const showButtons = (rowData) => {
@@ -72,7 +76,7 @@ const Home = () => {
               className="w-5 h-5 text-gray-500 cursor-pointer"
             />
             <PencilIcon
-            //   onClick={() => redirectToUpdate(rowData.id)}
+              onClick={() => redirectToUpdate(rowData.id)}
               className="w-5 h-5 text-green-500 cursor-pointer"
             />
             <TrashIcon
