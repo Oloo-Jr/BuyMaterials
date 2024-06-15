@@ -6,6 +6,7 @@ import Login from './Screens/SignIn/SignIn';
 import AddProduct from './Screens/AddProduct/AddProduct';
 import Home from './Screens/HomePage/Home';
 import ViewProduct from './Screens/ViewProduct/ViewProduct';
+import EditProduct from './Screens/AddProduct/EditProduct';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/products/:id" element={<ViewProduct />} />
+        <Route path="/edit-product/:id" element={<EditProduct />} />
       </Routes>
     </Router>
   );
