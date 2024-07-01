@@ -19,7 +19,6 @@ export default function AddProduct() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [priceError, setPriceError] = useState(false);
   const [quantityError, setQuantityError] = useState(false);
@@ -122,7 +121,6 @@ export default function AddProduct() {
             setTitle("");
             setDescription("");
             setImage("");
-            setIsChecked(false);
             setPrice("");
             setQuantity("");
 
